@@ -1,0 +1,140 @@
+html, body {
+	min-height: 768px;
+	height: 100%;
+	position: relative;
+}
+section {
+	max-width: 768px;
+	margin-left: auto;
+	margin-right: auto;
+}
+section, aside  {
+	margin-top: 50px;
+}
+section table td:first-child {
+	text-align: center; padding: 0 20px;
+}
+article {
+	margin-bottom: 50px;
+}
+.profile, .project-title {
+	padding-top: 50px;
+	padding-bottom: 50px; 
+}
+.profile-content {
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.profileImg {
+	background: url(../images/profile.jpg) no-repeat 0 0;
+	background-size: contain;
+	width: 250px; height: 250px;
+}
+.circle {
+	width: 200px; height: 200px;
+	border-radius: 100px;
+}
+
+.listing {
+	margin-top: 50px;
+	height: 200px;
+}
+
+.listing .col-sm-4 > div {
+	width: 225px; height: 225px; 
+	margin: 0 auto 30px auto;
+	border-radius: 5px;
+}
+
+.listing .item {
+	background: rgba(0,0,0,0.8);
+}
+.imgnsig {
+	background: url(../images/mandrill.jpg) no-repeat 0 0;
+	background-size: contain;
+}
+
+.listing .item--desc {
+	text-align: center;
+	font-size: 30px;
+	color: #fff;
+}
+.item--desc.entry {
+	padding-top: 30px;	
+}
+
+.item--desc.placeholder {
+	padding-top: 35%;
+}
+
+.project-title, .profile-desc {
+	text-align: center;
+}
+body {
+	background: #eee;
+}
+nav, .profile, .project-title {
+	background: #fff;
+}
+.listing .item-desc a {
+	color: #000;
+}
+
+
+/* Figure Images */
+
+div.row.grid {
+	position: relative;
+	text-align: center;
+}
+
+figure {
+	background: #ccc;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	margin-right: 15px;
+	margin-bottom: 15px;
+}
+img {
+	position: relative;
+	z-index: 0;
+}
+
+figcaption {
+	background: rgb(0,0,0);
+	color: #fff;
+	text-transform: uppercase;
+	position: absolute; top: 0;
+	width: 100%; height: 100%;
+	z-index: 1;
+	opacity: 0;
+}
+
+figcaption span {
+	font-size: 0.7em;
+}
+
+/* Animations */
+figure figcaption {
+	transition: opacity: 0.2;
+}
+
+figure:hover figcaption {
+	opacity: 0.8;
+}
+
+
+figure h4 {
+	padding-top: 40%;
+	opacity: 0;
+	transition: opacity 0.8s, transform 0.35s;
+}
+
+figure:hover h4 {
+	opacity: 1;
+	transform: translate3d(0,-30%,0);
+}
+
+
