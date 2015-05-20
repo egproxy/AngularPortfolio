@@ -1,0 +1,956 @@
+<div class="fluid-container">
+  <div class="project-title">
+    <h1>Project 1: Image and Signal Processing</h1>
+    <div>
+      <a target="_blank" href="">Download</a>
+    </div>
+  </div>
+</div>
+
+<div class="fluid-container">
+    
+    <aside class="affix hidden-xs col-sm-3" role="complementary">
+      <ul class="nav">
+        <li><a href="#/project1?scrollTo=basicOp">3.2. Basic Operations</a></li>
+        <li><a href="#/project1?scrollTo=quantDither">3.3. Quantization and Dithering</a></li>
+        <li><a href="#/project1?scrollTo=convEdge">3.4. Basic Convolution and Edge Detection</a></li>
+        <li><a href="#/project1?scrollTo=antialias">3.5. Antialiased Scale and Shift</a></li>
+        <li><a href="#/project1?scrollTo=funfilter">3.6. Fun Filter: Swirl Effect</a></li>
+      </ul>
+    </aside>
+
+    <div class="col-xs-offset-1 col-xs-9 col-sm-offset-3 col-sm-8" role="main">
+      <section id="basicOp">
+        <h2>3.2. Basic Operations</h2>
+        <div class="section-wrapper">
+
+          <article>
+            <h4>Brighten(double factor)</h4>
+
+              <strong>Parameter:</strong>
+              <table>
+                <tr><td>double :: factor</td><td> &gt;=0 </td></tr>
+              </table>
+    
+              <strong>Description:</strong><br />
+              This function interpolates the image to darken it and uses extrapolation
+              to brighten it while brightening process is affected more by interpolation.
+              The factor parameter is used to interpolate degenerate black image with current image. The interpolation is done with the PixelLerp function for every pixel of the current image with the black image.
+              <br />
+              <strong>Results:</strong><br />
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outShedBright1-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Original</h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedBright001-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Brighten <span>x0.1</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedBright005-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Brighten <span>x0.5</span></h4></div></figcaption>
+                </figure>
+              </div>
+
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outShedBright007-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Brighten <span>x0.7</span></h4></div></figcaption>
+                </figure>
+
+                <figure>
+                  <img src="./project1/images/outShedBright15-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Brighten <span>x1.5</span></h4></div></figcaption>
+                </figure>
+
+                <figure>
+                  <img src="./project1/images/outShedBright20-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Brighten <span>x2.0</span></h4></div></figcaption>
+                </figure>
+
+                <figure>
+                  <img src="./project1/images/outShedBright30-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Brighten <span>x3.0</span></h4></div></figcaption>
+                </figure>
+              </div>
+
+          </article>
+
+
+          <article>
+            <h4>ChangeContrast(double factor)</h4>
+              <strong>Parameter:</strong>
+              <table>
+                <tr><td>double :: factor</td><td> &gt;=0 </td></tr>
+              </table>
+    
+              <strong>Description:</strong><br />
+             To do contrast, first generate a constant gray image with the average image luminance by summing all the pixel luminance and then dividing by the total number of pixels. Then interpolate the gray image with the original image by the PixelLerp function for every pixel. Interpolation reduces contrast and extrapolation boosts it. By inputting negative alpha, it will generate inverted images with different contrast. 
+              <br />
+              <strong>Parameter Value Behavior:</strong>
+              <table>
+                <tr><td>&lt; 0</td><td>inverts the image</td>
+                <tr><td>0</td><td>grey image with no contrast</td></tr>
+                <tr><td>0 &gt; f &lt; 1</td><td>image loses contrast</td></tr>
+                <tr><td>1</td><td>original image</td></tr>
+                <tr><td>&gt; 1</td><td>Increases contrast</td></tr>
+              </table>
+              <br />
+
+              <strong>Results:</strong><br />
+
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outShedContrast10-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Original</h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedContrastNeg05-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Contrast <span>-0.5</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedContrast0-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Contrast <span>0</span></h4></div></figcaption>
+                </figure>
+              </div>
+
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outShedContrast05-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Contrast <span>0.5</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedContrast15-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Contrast <span>1.5</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedContrast20-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Contrast <span>2.0</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedContrast30-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Contrast <span>3.0</span></h4></div></figcaption>
+                </figure>
+              </div>
+          </article>
+
+          <article>
+            <h4>ChangeSaturation(double factor)</h4>
+              <strong>Parameter:</strong>
+              <table>
+                <tr><td>double :: factor</td><td> &gt;=0 </td></tr>
+              </table>
+              <strong>Description:</strong><br />
+              To do saturation, first generate a grayscale image by using the luminance function of each pixel. Saturation can then be decreased using interpolation via the PixelLerp function, and increases using extrapolation. Negative alpha inverts the hue of the input image.
+              <br />
+
+              <strong>Results:</strong><br />
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outShedSaturation10-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Original</h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedSaturation0-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Saturation <span>0.0</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedSaturation05-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Saturation <span>0.5</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedSaturation20-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Saturation <span>2.0</span></h4></div></figcaption>
+                </figure>
+              </div>
+              
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outShedSaturation30-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Saturation <span>3.0</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedSaturationNeg05-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Saturation <span>-0.5</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outShedSaturationNeg10-thumbnail.jpg" width="200"/>
+                  <figcaption><div><h4>Saturation <span>-1.0</span></h4></div></figcaption>
+                </figure>
+              </div>
+          </article>
+
+          <article>
+            <h4>ChangeGamma(double factor)</h4>
+              <strong>Parameter:</strong>
+              <table>
+                <tr><td>double :: factor</td><td> &gt;=0 </td></tr>
+              </table>
+              <strong>Description:</strong><br />
+              To implement gamma correction of the image, for each pixel, first convert it to a float from a char. Then divide the RGB values by 255.0f to obtain a decimal form, in which is inputted into the following formula:
+              <pre>
+              C<sub>new</sub> = C<sub>old</sub> <sup>1/factor</sup></pre> is 
+              applied where C<sub>new</sub> is the original color of the image, and the factor is positive.
+              Then the new color value is scaled by 255 and inserted into the RGB channel.
+              <br />
+              <strong>Results:</strong><br />
+              <div class="row grid">
+                <div class="col-sm-4">
+                  <figure>
+                    <img src="./project1/images/outShedGamma10-thumbnail.jpg" width="100%"/>
+                    <figcaption><div><h4>Original</h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-sm-4">
+                  <figure>
+                    <img src="./project1/images/outShedGamma01-thumbnail.jpg" width="100%"/>
+                    <figcaption><div><h4>Gamma <span>0.1</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-sm-4">
+                  <figure>
+                    <img src="./project1/images/outShedGamma03-thumbnail.jpg" width="100%"/>
+                    <figcaption><div><h4>Gamma <span>0.3</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-sm-4">
+                  <figure>
+                    <img src="./project1/images/outShedGamma05-thumbnail.jpg" width="100%"/>
+                    <figcaption><div><h4>Gamma <span>0.5</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-sm-4">
+                  <figure>
+                    <img src="./project1/images/outShedGamma15-thumbnail.jpg" width="100%"/>
+                    <figcaption><div><h4>Gamma <span>1.5</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-sm-4">
+                  <figure>
+                    <img src="./project1/images/outShedGamma20-thumbnail.jpg" width="100%"/>
+                    <figcaption><div><h4>Gamma <span>2.0</span></h4></div></figcaption>
+                  </figure>
+                </div>
+              </div>
+          </article>
+
+          <article>
+            <h4>Crop(int x, int y, int w, int h)</h4>
+
+              <strong>Parameters:</strong>
+              <table>
+                <tr><td>int :: x</td><td>cartesian x of crop position &gt; 0 and &lt; width</td></tr>
+                <tr><td>int :: y</td><td>cartesian y of crop position &gt; 0 and &lt; height</td></tr>
+                <tr><td>int :: w</td><td>width of crop &gt; 0</td></tr>
+                <tr><td>int :: h</td><td>height of crop &gt; 0</td></tr>
+              </table>
+
+              <strong>Description:</strong><br />
+              A subset of the original image is produced using the (x,y) position of the
+              original image as the (0,0) and having (w,h) as its dimensions. All pixels
+              from (x,y) to (x + w, y + h) from the original are mapped 1-1 to the subset.
+              <br />
+              All parameters must be positive.
+              <br />
+              <strong>Results:</strong><br />
+              <div class="row grid">
+                <div class="col-xs-5">
+                  <figure style="margin-right: 0;">
+                    <img src="./images/mandrill.jpg" width="100%"/>
+                    <figcaption><div><h4>Original</h4></div></figcaption>
+                  </figure>
+                  <figure style="float:left;">
+                    <img src="./project1/images/outMandrillCrop200_150_200_100-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4 style="font-size:0.9em;">Cropped <span>(200, 150, 200, 100)</span></h4></div></figcaption>
+                  </figure>
+                  <figure style="float:left;">
+                    <img src="./project1/images/outMandrillCrop100_300_100_150-thumbnail.jpg" width="100"/>
+                    <figcaption><div><h4 style="font-size:0.9em;">Cropped <span>(100, 300, 100, 150)</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-2">
+                  <figure  style="padding-right: 0;">
+                    <img src="./project1/images/outMandrillCrop300_50_150_350-thumbnail.jpg" width="150"/>
+                    <figcaption><div><h4>Cropped <span>(100, 300, 100, 150)</span></h4></div></figcaption>
+                  </figure>
+                </div>
+              </div>
+
+          </article>
+
+        </div>
+      </section>
+
+
+      <section id="quantDither">
+        <h2>3.3. Quantization and Dithering</h2>
+        <div class="section-wrapper">
+          
+          <article>
+            <h4>Quantize(int nbits)</h4>
+
+              <strong>Parameter</strong>
+              <table>
+                <tr><td>int :: nbits</td><td> &gt; 0 and &lt; 8</td></tr>
+              </table>
+
+              <strong>Description:</strong><br />
+              This quantizes the image to use nbits per color channel where 
+              nbits ranges from 1 -7. First, I have created a Vector3 class, 
+              in which I have inputted the RGB values and the RGB values in 
+              pixel is char. I then created a floorVec in my Vector3 to floor my 
+              values. Then, a map is defined between the input [0-255] and the output 
+              [0-2<sup>nbits</sup> - 1] by first converting input color values to a 
+              floating point with division by 256. After I selected the quantum 
+              by using the following formula: 
+              <pre>
+                q = floor(p*b)</pre> 
+              where p is the original pixel, and q is the appropriate quantum. 
+              To find the final color the below formula is then applied, 
+              and placed in the color channel
+              <pre>
+                c<sub>f</sub> = floor( 255 * q / (b - 1) )</pre>
+              The floor in the above formula is done in my Vector3 floorVec method.
+
+              <strong>Results:</strong><br />
+
+              <div class="row grid">
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerQuantize1-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Quantize <span>1</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerQuantize2-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Quantize <span>2</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerQuantize3-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Quantize <span>3</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerQuantize4-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Quantize <span>4</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerQuantize5-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Quantize<span> 5</span></h4></div></figcaption>
+                  </figure>
+                </div>
+              </div>
+
+          </article>
+
+          <article>
+            <h4>RandomDithering(int nbits)</h4>
+
+              <strong>Parameter</strong>
+              <table>
+                <tr><td>int :: nbits</td><td> &gt; 0 and &lt; 8</td></tr>
+              </table>
+
+              <strong>Description:</strong><br />
+              Dithering is done by adding some noise within the range 
+              [-0.5... + 0.5] by using the addRandomNoise() function in my 
+              vector3 class before quantizing. The addRandomNoise() function, 
+              finds a random noise for each value in the Vector3 with the formula: 
+
+              <pre>
+                value + (rand() % 256) / 256.0f - 0.5f</pre> 
+              The quantum is selected by using the formula:
+              <pre>
+              q = floor(p*b+ noise)</pre> 
+              where p is the original pixel, and q is the appropriate quantum, 
+              and noise is generated from the addRandomNoise() function. 
+              The final color is computed similarly to the quantize method as shown below:
+              <br />
+              To find the final color the below formula is then applied, and placed in the color channel
+              <pre>c<sub>f</sub> = floor( 255 * q / (b - 1) )</pre>
+              The floor in the above formula is done in my Vector3 floorVec method.
+              <br />
+              <strong>Results:</strong><br />
+
+              <div class="row grid">
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerDither1-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Dither <span>1</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerDither2-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Dither <span>2</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerDither3-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Dither <span>3</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerDither4-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Dither <span>4</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerDither5-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Dither <span>5</span></h4></div></figcaption>
+                  </figure>
+                </div>
+              </div>
+
+          </article>
+
+          <article>
+            <h4>FloydSteinbergDither(int nbits)</h4>
+
+              <strong>Parameter</strong>
+              <table>
+                <tr><td>int :: nbits</td><td> &gt; 0 and &lt; 8</td></tr>
+              </table>
+
+              <strong>Description:</strong><br />
+              In this method, an error diffusion method needs to be used by diffusing out errors made during quantizing to the surrounding pixels with the following weights:
+              <pre>
+                  right       = &alpha; = 7/16
+                  bottomLeft  = &beta; = 3/16
+                  bottom      = &gamma; = 5/16
+                  bottomRight = &delta; = 1/16
+              </pre>
+              After quantizing the pixel, an error is obtained from the difference between the original image pixel and the quantized pixel result, which then the error is scaled by above weights, depending on the pixel location. For example, the right pixel is error*alpha + the right pixel. The bottom left pixel + error * beta. The bottom pixel + error * gamma. The bottomRight pixel + error * delta. For this method and all future methods with edge conditions of pixels on the boundary, the toroidal approach is used. This is where the image is treated as toroidal, wrapping around at the edges.
+              <br />
+              <strong>Results:</strong><br />
+
+              <div class="row grid">
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerFloyd1-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Floyd-Steinberg <span>1</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerFloyd2-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Floyd-Steinberg <span>2</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerFloyd3-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Floyd-Steinberg <span>3</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerFloyd4-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Floyd-Steinberg <span>4</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3" style="width: 20% !important">
+                  <figure style="width: 100%">
+                    <img src="./project1/images/outFlowerFloyd5-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Floyd-Steinberg <span>5</span></h4></div></figcaption>
+                  </figure>
+                </div>
+              </div>
+
+
+          </article>
+
+        </div>
+      </section>
+
+
+      <section id="convEdge">
+        <h2>3.4. Basic Convolution and Edge Detection</h2>
+        <div class="section-wrapper">
+          
+          <article>
+            <h4>Blur(int n)</h4>
+
+              <strong>Parameter</strong>
+              <table>
+                <tr><td>int :: n</td><td> width of filter n = (2x + 3) where x is the set of natural numbers</td></tr>
+              </table>
+
+              <strong>Description:</strong><br />
+
+              To blur an image, a discrete convolution with a Gaussian blur 
+              filter is applied to each pixel on the image. The n in blur is an 
+              odd positive integer > 1. First, a Gaussian blur filter is done.
+              This is done by first choosing the filter width
+              <pre>
+                  &sigma; = floor(n/2)/2</pre>
+              The Gaussian blur filter is implemented with the formula: 
+              <pre>
+                f(u,v) = ( 1 / (2 * &Pi; * &sigma;<sup>2</sup>) ) e <sup>-( u<sup>2</sup> + v<sup>2</sup> ) / ( 2 * &sigma;<sup>2</sup> )</sup></pre>
+
+              Then, the convolution is implemented in integer arithmetic. This is done by taking the above filter, and converting the integers by dividing by the lowest element (furthest from the center) and rounding. Then, an overall normalization is computed by adding up all the filter elements. This overall normalization will be divided to the result of the convolution. To implement a discrete convolution on a 2D filter, the following equation is used to compute discrete convolution for every pixel:
+              <pre>
+                      <sup>a+width</sup>     <sup>b+width</sup>
+                I<sub>new</sub> =  &Sigma;         &Sigma;     I<sub>old</sub>(x, y)
+                      <sub>x=a-width</sub>    <sub>y=b-width</sub>
+              </pre>
+                    
+              where I<sub>old</sub> is the original image, and I<sub>new</sub> is the new image.
+<br /><br />          
+For all pixel calculations, I have used the Vector3 class in place of pixel, as Vector3 can deal with negative and floating numbers, as well as operations being overloaded. After the discrete convolution is computed, the resultant vector3 is then divided by the overall normalization, and then is set into the RGB channel. 
+<br /><br />
+Just like the earlier FloydSteinbergDither (int nbits) method, with edge conditions of pixels on the boundary, the toroidal approach is used. 
+              <br />
+              <strong>Results:</strong><br />
+              
+              <div class="row grid">
+                <div class="col-xs-12 col-sm-3">
+                  <figure>
+                    <img src="./project1/images/outShedblur3-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Blur <span>3</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                  <figure>
+                    <img src="./project1/images/outShedblur5-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Blur <span>5</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                  <figure>
+                    <img src="./project1/images/outShedblur7-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Blur <span>7</span></h4></div></figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <div class="row grid">
+                <div class="col-xs-12 col-sm-3">
+                  <figure>
+                    <img src="./project1/images/outShedblur9-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Blur <span>9</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                  <figure>
+                    <img src="./project1/images/outShedblur11-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Blur <span>11</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                  <figure>
+                    <img src="./project1/images/outShedblur13-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Blur <span>13</span></h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                  <figure>
+                    <img src="./project1/images/outShedblur19-thumbnail.jpg" width="100%"/>  
+                    <figcaption><div><h4>Blur <span>19</span></h4></div></figcaption>
+                  </figure>
+                </div>
+              </div>
+
+          </article>
+
+          <article>
+            <h4>Sharpen() </h4>
+
+              <strong>Parameter</strong>
+              <table>
+                <tr><td>None</td><td></td></tr>
+              </table>
+
+              <strong>Description:</strong><br />
+              Sharpening is opposite of blurring, and is similarly implemented. Instead, the idea is to bring out high frequencies more. The same discrete convolution is used like blur, however it is convolved with a sharpening filter. The sharpening filter shown below is used with the discrete convolution:
+              <pre>
+                                | -1   -2   -1 |
+                f(x,y) = 1/7 *  | -2   19   -2 |
+                                | -1   -2   -1 |</pre>
+              With this filter, it can be applied that n = 3, and the overall normalization would be 17
+Just like the blur method, a Vector3 class is used for computations as there may be negative numbers in the result.
+              <br />
+              <strong>Results:</strong><br />
+              <div class="row grid">
+                <div class="col-xs-12 col-sm-4">
+                  <figure>
+                    <img src="./project1/images/oriBlurredBycicle-thumbnail.jpg" width="250"/>  
+                    <figcaption><div><h4>Original</h4></div></figcaption>
+                  </figure>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                  <figure>
+                    <img src="./project1/images/outBycSharpen-thumbnail.jpg" width="250"/>  
+                    <figcaption><div><h4>Sharpened</h4></div></figcaption>
+                  </figure>
+                </div>
+              </div>
+
+
+          </article>
+          
+
+          <article>
+            <h4>EdgeDetect(int threshold)</h4>
+              <strong>Parameter</strong>
+              <table>
+                <tr><td>int :: threshold</td><td> ... </td></tr>
+              </table>
+
+              <strong>Description:</strong><br />
+              Edge detection is used to detect edge pixels in the image, shading those and making the rest of the image black. To find out the edge pixels in the image, a Sobel edge detector is used. For ease of calculation, first I have converted the image into a grayscale image with the pixel luminance function. Then, the Sobel filters is assigned to two arrays, sobelHori, and sobelVert, to detect regions of large horizontal or vertical gradients which might be edges. The Sobel filters used are the following:
+              <pre>
+                            | -1   0   1 |
+                f<sub>horiz</sub>(x,y) = | -2   0   2 |
+                            | -1   0   1 |
+
+                            |  1    2    1 |
+                f<sub>vert</sub>(x,y) = |  0    0    0 |
+                            | -1   -2   -1 |</pre>
+
+              
+              Since applying these filters may lead to negative numbers, the 
+              Vector3 class is used again. Just like the blur, and sharpen 
+              methods, a discrete convolution with these Sobel filters are 
+              applied to each pixel on the image. An overall normalization is 
+              not applied here as the sum in the Sobel filters are both 0. 
+              After convolving, a horizontal and vertical gradient images are 
+              obtained named, G<sub>x</sub> &amp; G<sub>y</sub>.Then a composite 
+              gradient image magnitude is obtained from the following formula:
+              <pre>
+                G = sqrt( abs(G<sub>x</sub>)<sup>2</sup> + abs(G<sub>y</sub>)<sup>2</sup>)</pre>
+
+              In computing this magnitude, where it is then set with the function setClamp. The net luminance is computed at each pixel, from the three color channels with the Luminance function in the pixel class. Finally, the image is thresholded based on the parameter given, to convert it to an edge image. This is done by checking if the luminance is greater than the threshold, where the pixel is white, otherwise it is black.
+              <br />
+              
+
+              <strong>Results:</strong><br />
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outCheckerEdge50-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Checker Edge<span> 50</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerEdge100-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Checker Edge <span>100</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerEdge250-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Checker Edge <span>250</span></h4></div></figcaption>
+                </figure>
+              </div>
+
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outWaveEdge30-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Wave Edge<span> 30</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outWaveEdge100-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Wave Edge <span>100</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outWaveEdge200-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Wave Edge <span>200</span></h4></div></figcaption>
+                </figure>
+              </div>
+
+          </article>
+
+        </div>
+      </section>
+
+
+      <section id="antialias">
+        <h2>3.5. Antialiased Scale and Shift</h2>
+        <div class="section-wrapper">
+          <article>
+            Three filters will be implemented, based on the value of the sampling method for both scale and resize, which can be set by -sampling &lt;int&gt;. 
+            <ul>
+              <li>-sampling 0 represents nearest neighbor filter.</li>
+              <li>-sampling 1 represents hat filter.</li>
+              <li>-sampling 2 represents Mitchell reconstruction cubic filter.  </li>
+            </ul>
+            <h4>Filters:</h4>
+            <ul>
+              <li>
+                <h4>Nearest Neighbor: </h4>
+                <p>This is done by picking the nearest point or pixel in the original image to reconstruct each pixel in the target image by using inverse mapping. The toroidal approach is used for edge conditions of pixels on the boundary.
+              </li>
+
+              <li>
+                <h4>Hat Filter:</h4>
+                <p>The hat filter is convolved with and applied by reconstructing each pixel in the target image by using inverse mapping. The hat filter varies linearly with following equation: 
+                <pre>  
+f(x) = 1-|x| where x is the distance between the Iold(x,y) and surrounding pixels. 
+f(x) = 0 when |x|&gt;1.2D filters are constructed by multiplying 1D filters; therefore, 
+f(x,y) = f(x) f(y).The default width of the hat filter is 3. 
+                </pre>
+                </p>
+              </li>
+              <li>
+                <h4>Mitchell Reconstruction Cubic:</h4>
+                <p>
+                The mitchell filter is convolved with and also applied by reconstructing each pixel in the target image by using inverse mapping. The mitchell filter uses the following equations:
+                <pre>f(0 &lt;= |x| &lt;= 1) = 1/6 * (7|x|<sup>3</sup> - 12|x|<sup>2</sup> + 16/3 )
+f(1 &lt;= |x| &lt;= 2) = 1/6 * (-7/3|x|<sup>3</sup> + 12|x|<sup>2</sup> - 20|x| + 32/3)
+                </pre>
+                  However, the default width of the mitchell filter is n = 5.
+                </p>
+              </li>
+            </ul>
+          </article>
+          <article>
+            <h4>Image* Scale(int sx, int sy)</h4>
+
+              <strong>Parameter</strong>
+              <table>
+                <tr><td>int :: sx</td><td> scale width </td></tr>
+                <tr><td>int :: sy</td><td> scale height </td></tr>
+              </table>
+
+              <strong>Description:</strong><br />
+              This operation resizes the image, where the resulting size is in the arguments.
+              First we find the scaling ratio for the new target image with the following calculation:
+              <pre>
+WidthRatio = (float)sizex / width
+HeightRatio = (float)sizey / height
+              </pre>
+              An inverse mapping is then done by looping over the new image, I<sub>new</sub>(a,b), where a, is the x for the target Image, and b is the y for the target image.
+              <br />             
+              Then, the pixel (u,v) from the old original image can be obtained with the following formula, and is floored:
+              <pre>
+u = a / WidthRatio
+v = b / HeightRatio
+              </pre>
+              Then, a minification or magnification filter is applied.
+In minification, by a factor s &lt; 1, we are replacing an image of width w by one of width sw, but conceptually with fat pixels of size 1/s.Thus, each pixel must integrate over the corresponding region in the original image convolved with filter f in following formula:
+              
+              <pre>
+                 <sup>u+width/wR</sup>  <sup>v+width/hR</sup>
+              I<sub>new</sub> =  &Sigma;         &Sigma;     f(wR*x-a, hR*y-b)*I<sub>old</sub>(x,y)
+                 <sub>x=u-width/wR</sub>  <sub>y=v-width/hR</sub>
+                 
+              where,
+              wR = widthRatio
+              hR = heightRatio 
+              I<sub>old</sub> is the original image, and I<sub>new</sub> is the new image
+              </pre>
+              All calculations are done with Vector3 due to floating points, as the filter is not necessarily evaluated at an integer location.
+              <br />
+              In Magnification with s &gt; 1, simply requires interpolating between samples in the original image to obtain a higher resolution image. This can be computed with the following formula: 
+              <pre>
+                          <sup>u+width</sup>     <sup>v+width</sup>
+              I<sub>new</sub>(a, b) =  &Sigma;         &Sigma;     f(x - u, y - v) * I<sub>old</sub>(x, y)
+                          <sub>x=u-width</sub>    <sub>y=v-width</sub>
+              </pre>
+              The same filters as for minification will be used, and all calculations are done with Vector3 due to floating points, as the filter is not necessarily evaluated at an integer location.
+              <br /><br />
+To find which filter to use, a check of if heightRatio &lt; 1, and if widthRatio &lt; 1 is done. Since the magnification, and minification differ slightly in the convolution, with these checks, two variables, widthU, and widthV is used in the for loops where it is determined if magnification or minification needs be used, with the above checks. Another check is applied inside the inner loop to find which filter to apply. After convolving, the pixel is inserted into the RGB channel.
+              <br />
+              
+              <strong>Results:</strong><br />
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outCheckerScaleNN300_300-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Nearest Neighbor <span>300 x 300</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerScaleNN300_512-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Nearest Neighbor <span>300 x 512</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerScaleNN512_300-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Nearest Neighbor <span>512 x 300</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerScaleNN800_800-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Nearest Neighbor <span>800 x 800</span></h4></div></figcaption>
+                </figure>                
+              </div>
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outCheckerScaleHat300_300-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Hat <span>300 x 300</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerScaleHat300_512-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Hat <span>300 x 512</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerScaleHat512_300-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Hat <span>512 x 300</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerScaleHat800_800-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Hat <span>800 x 800</span></h4></div></figcaption>
+                </figure>
+              </div>
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outCheckerScaleMitchell300_300-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Mitchell <span>300 x 300</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerScaleMitchell300_512-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Mitchell <span>300 x 512</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerScaleMitchell512_300-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Mitchell <span>512 x 300</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerScaleMitchell800_800-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Mitchell <span>800 x 800</span></h4></div></figcaption>
+                </figure>                
+              </div>
+          </article>
+
+          <article>
+            <h4>Shift(double sx, double sy)</h4>
+              <strong>Parameter</strong>
+              <table>
+                <tr><td>int :: sx</td><td> shift in x direction </td></tr>
+                <tr><td>int :: sy</td><td> shift in y direction </td></tr>
+              </table>
+
+              <strong>Description:</strong><br />
+              This function shifts the image based on values of sx and sy. For the real-valued shift, the following formula is used:
+              <pre>
+                          <sup>u+width</sup>     <sup>v+width</sup>
+              I<sub>new</sub>(a, b) =  &Sigma;         &Sigma;     f(x - u, y - v) * I<sub>old</sub>(x, y)
+                          <sub>x=u-width</sub>    <sub>y=v-width</sub>
+              where,
+              u = a - sx
+              v = b - sy
+              </pre>
+              This function is implemented similarly to the scale function, but instead of finding scaling ratio, we shift values by sx and sy, as shown in the above formula. Another difference between this function and the scale function is that a boundary check is done, where if the target pixel is out of the original image, then that target pixel would be black. Therefore, an inverse mapping is then done by looping over the new image, 
+              I<sub>new</sub>(a,b), where a, is the x for the target Image, and b is the y for the target image.
+The Vector3 class is used for float calculations, and is convolved with the above formula with the three filters. After convolving, the pixel is inserted into the RGB channel.
+              <br />
+              
+              <strong>Results:</strong><br />
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outCheckerShiftNN200_200-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Nearest Neighbor <span>200 x 200</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerShiftNN200_Neg50p62-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Nearest Neighbor <span>200 x -50</span></h4></div></figcaption>
+                </figure>
+              </div>
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outCheckerShiftHatNeg338p35_Neg213p62-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Hat <span>-338.35 x -213.62</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerShiftHatNeg58p35_413p62-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Hat <span>-58.35 x 413.62</span></h4></div></figcaption>
+                </figure>
+              </div>
+              <div class="row grid">
+                <figure>
+                  <img src="./project1/images/outCheckerShiftMitchell300p8_Neg322-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Mitchell <span>300.8 x -322</span></h4></div></figcaption>
+                </figure>
+                <figure>
+                  <img src="./project1/images/outCheckerShiftMitchellNeg338p35_Neg213p62-thumbnail.jpg" width="250"/>  
+                  <figcaption><div><h4>Mitchell <span>-338.35 x -213.62</span></h4></div></figcaption>
+                </figure>
+              </div>
+          </article>
+
+        </div>
+      </section>
+
+      <section id="funfilter">
+        <h2>3.6. Fun Filter: Swirl Effect</h2>
+          <strong>Paramters:</strong>
+          <table>
+            <tr><td>double :: angle</td><td>angle of swirl in degrees</td></tr>
+            <tr><td>double :: radius</td><td>radius of swirl</td></tr>
+          </table>
+
+          <strong>Description:</strong><br />
+          The fun non linear filter I have chose is a swirl effect convolved with a hat filter which is done by inverse mapping. The parameter it takes in is the swirl angle, and size. A hard coded constant middle point, (center) is calculated in the beginning to center the swirl at that position. Then, An inverse mapping is then done by looping over the new image: I<sub>new</sub>(a,b), where a, is the x for the target Image, and b is the y for the target image.
+          Then for each point in the new image target is needed to be recalculated by 
+          <pre>
+          aRecenter = a - center.x
+          bRecenter = b - center.y
+          
+          where,
+          a is I<sub>new</sub>x position
+          b is I<sub>new</sub>y position
+          </pre>
+          and the angle of the swirl is calculated with the following formula:
+          <pre>
+          angle = angle * e ^ -( aRecenter<sup>2</sup> + bRecenter<sup>2</sup> / size <sup>2</sup>)
+          </pre>
+          Then, the pixel (u,v) from the old original image can be obtained with the following formula, and is floored:
+          <pre>
+          u = aRecenter * cos(angle) + bRecenter * sin(angle)
+          v = aRecenter * -sin(angle) + bRecenter * cos(angle)
+          </pre>
+          A hat filter is convolved with and applied by reconstructing each pixel in the target image by using inverse mapping with the following formula:
+          <pre>
+                      <sup>u+width</sup>     <sup>v+width</sup>
+          I<sub>new</sub>(a, b) =  &Sigma;         &Sigma;     f(x - u, y - v) * I<sub>old</sub>(x, y)
+                      <sub>x=u-width</sub>    <sub>y=v-width</sub>
+          </pre>
+          The Vector3 class is used for float calculations. After convolving with the hat filter, the pixel is inserted into the RGB channel.
+          <br />
+          <strong>Results:</strong><br />
+          <div class="row grid">
+            <figure>
+              <img src="./project1/images/outFunSwirl60Deg_100Size-thumbnail.jpg" width="250"/>  
+              <figcaption><div><h4>Fun <span>60 deg 100 radius</span></h4></div></figcaption>
+            </figure>
+            <figure>
+              <img src="./project1/images/outFunSwirl135Deg_200Size-thumbnail.jpg" width="250"/>  
+              <figcaption><div><h4>Fun <span>135 deg 200 radius</span></h4></div></figcaption>
+            </figure>
+          </div>
+          <div class="row grid">
+            <figure>
+              <img src="./project1/images/outFunSwir500Deg_80Size-thumbnail.jpg" width="250"/>  
+              <figcaption><div><h4>Fun <span>500 deg 80 radius</span></h4></div></figcaption>
+            </figure>
+            <figure>
+              <img src="./project1/images/outFunSwir900Deg_350Size-thumbnail.jpg" width="250"/>  
+              <figcaption><div><h4>Fun <span>900 Deg 350 radius</span></h4></div></figcaption>
+            </figure>
+          </div>
+      </section>
+    </div>
+</div>
+
+<div class="modal" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="modalCarousel" class="carousel">
+          <div class="carousel-inner"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
