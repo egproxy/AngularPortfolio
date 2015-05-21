@@ -1,0 +1,55 @@
+<div class="fluid-container">
+  <div class="project-title">
+    <h1>Project 2: Geometric Modeling and Mesh Simplification</h1>
+    <div>
+      <a title="Download zip package. Opens in new window" 
+        target="_blank" href="">
+        Download Executable
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="fluid-container">
+    <aside class="affix hidden-xs col-sm-3" role="complementary">
+      <ul class="nav">
+        <li>
+            <a href="#/project2?scrollTo=meshViewer">
+            3.1 Mesh Viewer</a>
+        </li>
+        <li>
+            <a href="#/project2?scrollTo=meshConnectivity">
+            3.2 Mesh Connectivity Data Structure</a>
+        </li>
+        <li>
+            <a href="#/project2?scrollTo=meshDecimation">
+            3.3 Mesh Decimation</a>
+        </li>
+        <li>
+            <a href="#/project2?scrollTo=meshSimplify">
+            3.4 Quadratic Simplication</a>
+        </li>
+        <li>
+            <a href="#/project2?scrollTo=meshProgressive">
+            3.5 Progressive meshes</a>
+        </li>
+      </ul>
+    </aside>
+    <div class="col-xs-offset-1 col-xs-9 col-sm-offset-3 col-sm-8" role="main">
+        <section id="meshViewer" 
+            ng-include src="'./sections/meshViewer.html'">
+        </section>
+        <section id="meshConnectivity"
+            ng-include src="'./sections/meshConnect.html'">
+        </section>
+        <section id="meshDecimation" 
+            ng-include src="'./sections/meshDecimation.html'">
+        </section>
+        <section id="meshSimplify" 
+            ng-include src="'./sections/meshSimplify.html'">
+        </section>
+        <section id="meshProgressive" 
+            ng-include src="'./sections/meshProgressive.html'">
+        </section>
+    </div>
+</div>

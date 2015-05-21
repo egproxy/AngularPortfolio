@@ -1,0 +1,38 @@
+<h2>3.2 Mesh Connectivity Data Structure</h2>
+<div class="section-wrapper">
+	<p>The edge collapse is done as follows:</p>
+
+
+Let v0 and v1 be two end points of the edge e that is being collapsed. 
+
+
+<!-- # -->
+The first thing that is done is finding all faces f adjacent to v0 and v1. 
+<!-- # -->
+The second thing is finding all half edges that connects from v0 and setting
+their vertex to v1. 
+The reason is that v1 will be moved to the new point instead of creating a 
+new vertex. Then translate v1 to the optimal position which will be calculated 
+and stored in e. 
+
+	See section 3.4 for Quadric simplification calculations for optimal positions. 
+
+<!-- # -->
+Then update the adjacency by first removing the three halfedges that is stored in the current face: e->edge, e->prev, and e->next. 
+
+<!-- # -->
+Then removing the inverse of e->next->inverse and e->prev->inverse. 
+This is done by changing the e->next->inverse->inverse like  
+e->next->inverse->inverse = e->prev->inverse, and e->prev->inverse->inverse = e->next->inverse. 
+
+This is done so that the two e->next->inverse and e->prev->inverse become an edge.
+Then the edge information also needs to be changed with the following:
+if(e->next->edge->halfedge[0] == e->next)
+e->next->edge->halfedge[0] = e->prev->inverse;
+else
+e->next->edge->halfedge[1]=e->prev->inverse;
+Then the previous edge information also needs to be updated just like the next by setting
+e->prev->inverse->edge = e->next->edge. Similarly halfedges that belongs to e->inverse->face also needs to be updated. However, if e->inverse is a nullptr, that means that the edge being collapsed is a boundary edge. After collapsing the edge, there will be one face in f that is not removed, in which is found after finding halfedge connecting from v1 and faces. The halfedge of this face will be v1 new connectingEdge. Using this new connectingEdge, it is able to walk around and also find all faces surrounding v1, in which the face’s normals are reupdated. Then, each half edge’s conncetingEdge in v1’s connectingEdge face, needs to also be reupdated as well, so that it can walk around its face correctly, or else it will be still be pointed to the removed edge.Then each vertex normal is recalculated with the function CalcVertexNormal(i) where i is v1, e->next->inverse->vertex, and e->prev->inverse->vertex. Therefore, it can be seen that the edge collapse can be performed in constant time.
+
+
+</div>

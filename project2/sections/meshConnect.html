@@ -1,0 +1,80 @@
+<h2>3.2 Mesh Connectivity Data Structure</h2>
+<div class="section-wrapper">
+	
+
+	<p>I implemented a half-edge data structure because it lets you walk around
+	face very easily which will make other operations for edge collapse done 
+	easier as well as vertex split. Even though it takes more time to implement,
+	and is more complex I believe it would help me in the long run. It also has 
+	compact storage. My data structure  can efficiently update for edge collapse 
+	since I am able to find all the faces adjacent to any vertex, and update the 
+	adjacency information easily as each half edge contains all the information 
+	needed.</p> 
+
+
+	<p>To construct a half edge data structure, the following four classes had
+	to be implemented:</p> 
+	
+	<dl>
+		
+		<dt>Vertex</dt>
+
+		<dd>Vertex contains a position, normal, a connecting  halfedge, 
+		isBoundary, to find if it is a boundary. and an index which is the 
+		order stored when reading in from the off file. The same index 
+		concept applies to edges, and faces, where it is very useful when 
+		constructing the faces for surrounding each vertex, as well as 
+		finding boundary information.</dd>
+
+		<dt>HalfEdge</dt>
+
+		<dd>HalfEdge contains a pointer to the next and previous half edge 
+		which creates the face, inverse half-edge, which is the inverse half 
+		edge where an inverse halfedge and itself constructs an edge, a vertex 
+		where the halfedge originates from, and the face the halfedge belongs 
+		to. It also contains an edge, where an edge stores two half edges, 
+		the current half-edge and inverse of that halfedge.</dd>
+		
+		<dt>Edge</dt>
+		
+		<dd>An edge class contains an index, and two halfedges: halfedge[0] and 
+		halfedge[1]. If the edge is a boundary edge, then halfedge[1] would be
+		set to nullptr, since halfedge[1] is the inverse of halfedge[0].</dd>
+		
+		<dt>Face</dt>
+
+		<dd>Face contains three halfedges, which belongs to the same face, and
+		is connected like a circular list, a normal, its surface area, and an
+		index as well.</dd>
+
+	</dl>
+
+
+	<p>When reading in the off file, I have constructed all the vertices, and 
+	faces positions and index in which is stored in a list in mesh. After
+	reading the off file, I then create the half edge data structure with the
+	method BuildConnect().</p>
+
+
+	<p>First, for each face f, the next and previous of f’s halfedge are set, so
+	that it can create a circular list. Then f.halfedge[i].face = f where i is
+	0,1,2, and f.hafledge[i].vertex->connectingHe is set to f.halfedge[i].</p>
+
+
+	<p>The inverse of each halfedge is constructed in the following way:</p>
+
+	<p>A ring array is created which stores faces adjacent to each vertex, where 
+	ring[i], i is the index of a vertex. The construction is done by looping 
+	through each face and pushing back the face to the vertices associated with 
+	it. Then to find the inverse half edge, the other face stored in the ring 
+	will contain it. To find the inverse vertex, loop through the other face’s 
+	halfedge and find the two end points matching the current half edges end 
+	points. Then set the inverse each half edge, and edge. If there is no 
+	econd face, then the current edge is a boundary edge, and the inverse 
+	halfedge is set to nullptr. Then for each face, an edge is constructed, 
+	which contains halfedge, and inverse halfedge and push it into the edge 
+	list in the mesh class, where there will be three edges per face. This 
+	creates the edge information.</p>
+
+	
+</div>

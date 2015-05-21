@@ -1,0 +1,72 @@
+<h2>3.1 Mesh Viewer</h2>
+<div class="section-wrapper">
+	<p>The viewer can perform basic operations such as rotate, translate, 
+	and scale with the following:</p>
+	<ul>
+		<li>‘z’ = Scale up</li>
+		<li>‘Z’ = Scale down</li>
+		<li>‘w’ = translate up</li>
+		<li>‘s’ = translate down</li>
+		<li>‘a’ = translate left</li>
+		<li>‘d’ = translate right</li>
+		<li>‘right click + drag’ =  rotate model</li>
+	</ul>
+
+	<p>Scaling is implemented with the method glScalef(scale, scale, scale), in 
+	which the float scale increase or decrease every time you scale up or down.
+	Translate is down by moving the eye of the camera, and the camera is
+	implemented with:</p>
+	<pre>glOrtho(-1.1, 1.1, -1.1, 1.1, -10000, 10000)</pre> 
+	
+	<p>The models are read in with the function:</p> 
+	<pre>bool ReadOFFFile(char *filename)</pre>
+	
+	<p>I implemented a nicer shading on the mesh by computing normals with 
+	surface area weights. The reason I use surface area weights is because
+	if computed normals regularly, it will cause two problems.<p>
+	<dl>
+		<dt>Problem #1</dt>
+ 		<dd>triangles may make up the thin edges of a box will ‘claim’ much of 
+ 		the normal orientation. This causes ‘rounded’ shading on the large flat
+ 		sides of the box.</dd>
+ 		<dt>Problem #2</dt>
+		<dd>This is then made worse because two corners of those large sides
+		contribute two times the facet normal (two triangles touch the vertex), 
+		while the other two corners contribute only one times (one triangle 
+		touches the vertex). This results into a discontinuity (a diagonal 
+		artifact) when shaded.</dd>
+	</dl>
+
+	<p>The surface area weights calculation will solve these problems and is done 
+	in the CalcFaceNormal(Face * fi), where i take two vertex, and cross product 
+	it, which gives me the normal. Before normalizing the normal, I find the 
+	area of the triangle which is 0.5f * normal.length(). Finally, I normalize 
+	the normal. However, this only calculates face normals for every triangle. 
+	In order to calculate vertex normals for nice shading, I first create a 
+	vector which stores all the faces for every vertex. Then, I use this vector 
+	to calculate my vertex normal, which is done by for each vertex, I multiply 
+	the face normal stored in the vertex with the area of the face for each face 
+	each vertex has. A vertex can have a maximum of two faces. After summing up 
+	the faces to calculate the normal for each vertex, it is then divided by the 
+	cumulative area in, where it is then normalized. This will give us a smooth 
+	shading.</p>
+
+	<p>In order to automatically compute a default scale for display, so the 
+	mesh is centered on the screen, I recalc all the vertices by translating 
+	to the center (0,0,0). This is done by finding the maximum and minimum 
+	x,y,z positions, then calculating the center with the following:</p>
+	<pre>Vector3 center = max - (max - min) / 2.0f;
+	where max and min are Vector3 which stores the max and min of x,y,z.</pre>
+
+	<p>The scale factor is computed by 2.0f/max. Then, each vertex is translated 
+	to (0,0,0) by subtracting the calculated center and then multiplying the 
+	cale factor. This centers every model, and also scaled to a pleasing size.</p>
+
+	<p>All data read from the off file are stored in a Mesh class which contains 
+	list&lt;Vertex&gt; vertices, list&lt;Face&gt; faces, list&lt;edge&gt; edges.
+	This is so I can achieve constant time time complexity for adding and 
+	removing.</p>
+
+	<p>The following are four different constructed constructed models; cow, 
+	brain, armadillo, and bunny:</p>
+</div>
