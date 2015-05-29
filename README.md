@@ -4,7 +4,7 @@ This is a small portfolio site done for a friend that can be served
 through dropbox's public folder or anything that can serve static  
 files with the correct mime-type.  
   
-Technologies used in this project:  
+### Technologies used in this project: ###
 - node/\*npm
 - GruntJS
 - Sass
@@ -12,11 +12,11 @@ Technologies used in this project:
 - Bootstrap
 - JQuery
   
-* only need to understand npm for the build system (gruntJS) to work  
+\*only need to understand npm for the build system (gruntJS) to work  
   Starting a server with node is only if the website is to be viewed  
   locally.  
   
-To view project locally:  
+### To view project locally: ###
 (1) npm install  
 Will download required modules for concatenating and minifying css and js  
 Currently, angular will complain about a dependency injection resolution  
