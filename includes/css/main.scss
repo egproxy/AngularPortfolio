@@ -1,12 +1,25 @@
 $profile-image: url(../images/profile.jpg);
 $prjkt-one-image: url(../images/mandrill.jpg);
-$prjkt-two-image: url(../images/);
+$prjkt-two-image: url(../images/2016Faces.png);
 $prjkt-tre-image: url(../images/);
+
+@mixin circle($diameter) {
+	height: $diameter;
+	width: $diameter;
+	border-radius: $diameter/2;
+}
+
 
 html, body {
 	min-height: 768px;
 	height: 100%;
 	position: relative;
+}
+body {
+	background: #eee;
+}
+nav, .profile, .project-title {
+	background: #fff;
 }
 section {
 	max-width: 768px;
@@ -16,58 +29,65 @@ section {
 section, aside  {
 	margin-top: 50px;
 }
-
 section table td:first-child {
 	text-align: center; padding: 0 20px;
 }
 article {
 	margin-bottom: 50px;
 }
+
+
 .profile, .project-title {
 	padding-top: 50px;
-	padding-bottom: 50px; 
+	padding-bottom: 50px;
 }
-.profile-content {
+.profile-frame {
 	overflow: hidden;
 	margin: 0 auto;
+	@include circle(200px);
 }
-
-.profileImg {
+.profile--image {
 	background: $profile-image no-repeat 0 0;
 	background-size: contain;
 	width: 250px; height: 250px;
 }
-.circle {
-	width: 200px; height: 200px;
-	border-radius: 100px;
-}
+
 
 .listing {
 	margin-top: 50px;
 	height: 200px;
 }
-
 .listing .col-sm-4 > div {
-	width: 225px; height: 225px; 
+	width: 225px; height: 225px;
 	margin: 0 auto 30px auto;
 	border-radius: 5px;
 }
-
 .listing .item {
 	background: rgba(0,0,0,0.8);
 }
-.imgnsig {
-	background: $prjkt-one-image no-repeat 0 0;
-	background-size: contain;
-}
-
 .listing .item--desc {
 	text-align: center;
 	font-size: 30px;
 	color: #fff;
 }
+.listing .item-desc a {
+	color: #000;
+}
+
+
+
+.img-sig {
+	background-size: contain;
+}
+.img-sig.projectOne {
+	background: $prjkt-one-image no-repeat 0 0;
+}
+
+.img-sig.projectTwo {
+	background: $prjkt-two-image no-repeat 0 0;
+}
 .item--desc.entry {
-	padding-top: 30px;	
+	padding-top: 30px;
 }
 
 .item--desc.placeholder {
@@ -77,24 +97,18 @@ article {
 .project-title, .profile-desc {
 	text-align: center;
 }
-body {
-	background: #eee;
-}
-nav, .profile, .project-title {
-	background: #fff;
-}
-.listing .item-desc a {
-	color: #000;
-}
+
 
 
 /* Figure Images */
-
+img {
+	position: relative;
+	z-index: 0;
+}
 div.row.grid {
 	position: relative;
 	text-align: center;
 }
-
 figure {
 	background: #ccc;
 	position: relative;
@@ -103,11 +117,6 @@ figure {
 	margin-right: 15px;
 	margin-bottom: 15px;
 }
-img {
-	position: relative;
-	z-index: 0;
-}
-
 figcaption {
 	background: rgb(0,0,0);
 	color: #fff;
@@ -117,7 +126,6 @@ figcaption {
 	z-index: 1;
 	opacity: 0;
 }
-
 figcaption span {
 	font-size: 0.7em;
 }
@@ -126,21 +134,15 @@ figcaption span {
 figure figcaption {
 	transition: opacity: 0.2;
 }
-
 figure:hover figcaption {
 	opacity: 0.8;
 }
-
-
 figure h4 {
 	padding-top: 40%;
 	opacity: 0;
 	transition: opacity 0.8s, transform 0.35s;
 }
-
 figure:hover h4 {
 	opacity: 1;
 	transform: translate3d(0,-30%,0);
 }
-
-
