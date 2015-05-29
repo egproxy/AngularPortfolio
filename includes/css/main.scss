@@ -1,3 +1,8 @@
+$profile-image: url(../images/profile.jpg);
+$prjkt-one-image: url(../images/mandrill.jpg);
+$prjkt-two-image: url(../images/);
+$prjkt-tre-image: url(../images/);
+
 html, body {
 	min-height: 768px;
 	height: 100%;
@@ -11,6 +16,7 @@ section {
 section, aside  {
 	margin-top: 50px;
 }
+
 section table td:first-child {
 	text-align: center; padding: 0 20px;
 }
@@ -27,7 +33,7 @@ article {
 }
 
 .profileImg {
-	background: url(../images/profile.jpg) no-repeat 0 0;
+	background: $profile-image no-repeat 0 0;
 	background-size: contain;
 	width: 250px; height: 250px;
 }
@@ -51,7 +57,7 @@ article {
 	background: rgba(0,0,0,0.8);
 }
 .imgnsig {
-	background: url(../images/mandrill.jpg) no-repeat 0 0;
+	background: $prjkt-one-image no-repeat 0 0;
 	background-size: contain;
 }
 
