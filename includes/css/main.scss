@@ -1,7 +1,6 @@
 $profile-image: url(../images/profile.jpg);
 $prjkt-one-image: url(../images/mandrill.jpg);
 $prjkt-two-image: url(../images/2016Faces.png);
-$prjkt-tre-image: url(../images/);
 
 @mixin circle($diameter) {
 	height: $diameter;
@@ -34,6 +33,7 @@ section table td:first-child {
 }
 article {
 	margin-bottom: 50px;
+  overflow: hidden;
 }
 
 
@@ -75,17 +75,15 @@ article {
 }
 
 
-
-.img-sig {
-	background-size: contain;
-}
 .img-sig.projectOne {
 	background: $prjkt-one-image no-repeat 0 0;
+	background-size: contain;
 }
-
 .img-sig.projectTwo {
 	background: $prjkt-two-image no-repeat 0 0;
+	background-size: contain;
 }
+
 .item--desc.entry {
 	padding-top: 30px;
 }

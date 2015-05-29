@@ -1,0 +1,91 @@
+<h2>3.4 Quadratic Simplification</h2>
+<div class="section-wrapper">
+
+	<p>In order to update the data structure for vertex splits, first before collapsing an edge, the original coordinate for v1 and half-edges originating from v0 is stored on a stack. The vertex split is done similarly to the edge collapse using the the data stored on the stack. Based on the stack information, v1 is moved to its original position, and re update connectingHalfEdge of v1 adjacency list. Due to the connectingHalfEdge face never updated after the edge collapse, it can be used to update the adjacency list for vertex split, as it was originally before the edge collapse. As it is very similar to edge collapse, the following is the inverse updates of the adjacency list:</p>
+
+	<pre>
+	e->next->inv->inv=e->next;
+	e->prev->inv->inv = e->prev;</pre>
+
+	<p>Then the edge information also needs to be changed with the following:</p>
+
+	<pre>
+	if(e->next->edge->halfedge[0] == e->next->inv)
+		e->next->edge->halfedge[1] =e->next;
+	else
+		e->next->edge->halfedge[0] =e->next;</pre>
+
+	<p>This again is similarly and the exact opposite of the edge collapse.
+	Similarly halfedges that belongs to e->inverse->face also needs to be updated. However, if e->inverse is a nullptr, that means that the edge being split is a boundary edge. Next, using the stored information on the stack for each halfedge that is stored around v0, each halfedge points back to v0 so that it restores its original state. Then adjacent faces of v0 and v1 normal gets reupdated with the method CalcFaceNormal(i) in which i represents the faces surrounding v0 and v1. Then each vertex normal is recalculated with calc VertexNormal(i) where i is v1->next->vertex and v1->prev->vertex, as well as v0->next->vertex and v0->prev->vertex.</p>
+
+	<dl>
+		<dt>Simple keyboard control for progressive meshes:</dt>
+		<dd>‘1’ = make the mesh more coarser</dd>
+		<dd>‘2’ = make the mesh more detailed</dd>
+	</dl>
+
+	<video controls>
+		<source src="./project2/videos/small.ogv" type='video/ogg'></source>
+	</video>
+
+	<div class="col-xs-12">
+
+		<div class="col-xs-6">		
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh1.png">
+			<h4>Progressive Mesh 1
+		</div>
+		
+		<div class="col-xs-6">
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh2.png">
+			<h4>Progressive Mesh 2
+		</div>
+	</di
+	v>
+	<div class="col-xs-12">
+		<div class="col-xs-6">		
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh3.png">
+			<h4>Progressive Mesh 3</h4>
+		</div>
+		
+		<div class="col-xs-6">
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh4.png">
+			<h4>Progressive Mesh 4</h4>
+		</div>
+	</di
+	v>
+	<div class="col-xs-12">
+		<div class="col-xs-6">		
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh5.png">
+			<h4>Progressive Mesh 5</h4>
+		</div>
+		
+		<div class="col-xs-6">
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh6.png">
+			<h4>Progressive Mesh 6</h4>
+		</div>
+	</di
+	v>
+	<div class="col-xs-12">
+		<div class="col-xs-6">		
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh7.png">
+			<h4>Progressive Mesh 7</h4>
+		</div>
+		
+		<div class="col-xs-6">
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh8.png">
+			<h4>Progressive Mesh 8</h4>
+		</div>
+	</di
+	v>
+	<div class="col-xs-12">
+		<div class="col-xs-6">		
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh9.png">
+			<h4>Progressive Mesh 9</h4>
+		</div>
+		
+		<div class="col-xs-6">
+			<img alt="Mesh" width="100%" height="auto" src="./project2/images/part5/ProgressiveMesh10.png">
+			<h4>Progressive Mesh 10</h4>
+		</div>
+	</div>
+</div>
