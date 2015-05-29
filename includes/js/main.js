@@ -1,9 +1,9 @@
 ;"use strict";
-var jlinApp = angular.module('jlinApp', [
+var portfApp = angular.module('portfApp', [
 	'ngRoute'
 ]);
 
-jlinApp.config(['$routeProvider', function($routeProvider){
+portfApp.config(['$routeProvider', function($routeProvider){
 $routeProvider
 	.when("/", {templateUrl: 'home.html', controller: 'PageCtrl'})
 	.when("/project1", {templateUrl: 'project1/index.html', controller: 'PageCtrl'})
@@ -11,7 +11,7 @@ $routeProvider
 }]);
 
 
-jlinApp.controller('PageCtrl', function() {
+portfApp.controller('PageCtrl', function() {
 	// /* when clicking a thumbnail */
 	$('figure').click(function(){
 	   	var src = $(this).find('img').attr('src');
@@ -22,20 +22,20 @@ jlinApp.controller('PageCtrl', function() {
 	    		'width': '100%',
 	    		'height': 'auto'
 	    	});
-	    	
+
 	    	$('.carousel-inner').children().remove();
 	    	$img.appendTo('.carousel-inner');
 	    	$('#myModal').modal('show');
 	    }
-	
+
 	});
 
 
 });
 
-jlinApp.run(function($rootScope, $location, $anchorScroll, $routeParams) {
+portfApp.run(function($rootScope, $location, $anchorScroll, $routeParams) {
   $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
     $location.hash($routeParams.scrollTo);
-    $anchorScroll();  
+    $anchorScroll();
   });
 })
