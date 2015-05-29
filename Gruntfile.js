@@ -1,10 +1,10 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-   
+
     /* Can run all atomicized tasks(target) with
        - grunt watch
-       Can run atomicized tasks(target) with 
+       Can run atomicized tasks(target) with
        - grunt watch:script
        - grunt watch:css
 
@@ -29,20 +29,38 @@ module.exports = function(grunt) {
       },
       css: {
         files: ['src/css/*.scss'],
-        tasks: ['sass']
+        tasks: ['sass', 'cssmin']
       }
     },
 
-  
+
     /* targets should contain src & dest or files property
        can be used to specify multiple dest/src pairs
+       Ordering matters
     */
 
     concat: {
-      options: { separator: ';\n' },
       build: {
-        src: 'includes/js/**/*.js',
+        options: { separator: ';\n' },
+        src: [
+          'includes/js/libs/jquery-1.11.3.min.js',
+          'includes/js/libs/bootstrap.js',
+          'includes/js/libs/angular.js',
+          'includes/js/libs/angular-route.js',
+          'includes/js/main.js'
+        ],
         dest: 'scripts/main.js'
+      }
+    },
+
+    cssmin: {
+      build: {
+        files: {
+          'styles/main.min.css' : [
+            'includes/css/libs/bootstrap.css',
+            'styles/main.css'
+          ]
+        }
       }
     },
 
@@ -54,7 +72,7 @@ module.exports = function(grunt) {
     },
 
     sass: {
-      options: { style: 'compressed' },
+      options: { style: 'compressed', sourceMap: false },
       dist: {
         files: {
           'styles/main.css' : 'includes/css/main.scss'
@@ -66,6 +84,9 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  // default task
+  grunt.registerTask('default', ['concat', 'uglify', 'sass', 'cssmin']);
 };
