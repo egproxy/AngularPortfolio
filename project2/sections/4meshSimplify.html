@@ -1,53 +1,88 @@
 <h2>3.4 Quadratic Simplification</h2>
 <div class="section-wrapper">
 
-	<p>To implement Garland's 97 paper on quadric mesh simplification, the order to perform the edge collapses is done by a priority queue data structure was used. The following algorithm was used to push the data on to the heap which was given in the slides:</p>
+	<p>To implement Garland's 97 paper on quadric mesh simplification, the
+  order to perform the edge collapses is done by a priority queue data
+  structure was used. The following algorithm was used to push the data
+  on to the heap which was given in the slides:</p>
 
 	<img alt="slide algorithm" src="./project2/images/part4/SimpleAlg.png">
 
-	<p>First, the CalcInitialQ() method, which calculates all vertices Quadric matrix by looping through all vertices stored in the mesh, in which is used to compute Q for all vertices vi. The following plane equation ax + by + cz + d = 0 where a , b, c are values of the normal of the plane, and d = v-normalwhere v is the position on the plane in my case, pos->face->halfedge[0].vertex->position where pos is an iterator of the vertex list in mesh. Then, getting the quadric matrix of the initial vertices by summing up all adjacent faces. This is done by callng the SumQ method is called where it stores an array of 10 floating point numbers per vertex for storage efficiency, in which uses the model:</p>
+	<p>First, the CalcInitialQ() method, which calculates all vertices Quadric
+  matrix by looping through all vertices stored in the mesh, in which is
+  used to compute Q for all vertices vi. The following plane equation
+  ax + by + cz + d = 0 where a , b, c are values of the normal of the plane,
+  and d = v-normalwhere v is the position on the plane in my case,
+  pos-&gt;face-&gt;halfedge[0].vertex-&gt;position where pos is an iterator
+  of the vertex list in mesh. Then, getting the quadric matrix of the initial
+  vertices by summing up all adjacent faces. This is done by callng the SumQ
+  method is called where it stores an array of 10 floating point numbers per
+  vertex for storage efficiency, in which uses the model:</p>
 
 	<img alt="slide equation" src="./project2/images/part4/SimpleEq.png">
 
-	<p>Due to not using the threshold to find all valid pairs, then the best pair each vertex belongs to will be used. However, since a half edge data structure has been implemented, in which includes an edge list in the mesh, that edge list contains all valid pairs, in which contains the best pairs.</p>
+	<p>Due to not using the threshold to find all valid pairs, then the best
+  pair each vertex belongs to will be used. However, since a half edge data
+  structure has been implemented, in which includes an edge list in the mesh,
+  that edge list contains all valid pairs, in which contains the best pairs.</p>
 
-	<p>Next is computing the optimal position by using the method CalcOptimalPos(Edge *) for each edge which contains the valid pairs. Using each vertex’s floating point array [10], a 4x4 Quadric matrix is calculated and stored. Then a gaussian elimination is performed with the equation SolveLinearEquation(double(*matrix)[4], Vector4 rhs, Vector4 &amp;solution), in which finds out if it is singular. If the solution is not unique. Then the end points will be used to be stored in the optimal position, in which is determined if it is a boundary edge or not. If it is a boundary edge then, v0 will be used, and if it is not a boundary edge v1 will be used as the optimal position. If the solution is unique, then the optimal position will be the solution, in which is stored in the edge. Then edge will be pushed onto the heap, in which will give the least error based on the cost in the priority queue</p>
+	<p>Next is computing the optimal position by using the method
+  CalcOptimalPos(Edge *) for each edge which contains the valid pairs. Using
+  each vertex’s floating point array [10], a 4x4 Quadric matrix is calculated
+  and stored. Then a gaussian elimination is performed with the equation
+  SolveLinearEquation(double(*matrix)[4], Vector4 rhs, Vector4 &amp;solution),
+  in which finds out if it is singular. If the solution is not unique. Then
+  the end points will be used to be stored in the optimal position, in which
+  is determined if it is a boundary edge or not. If it is a boundary edge then,
+  v0 will be used, and if it is not a boundary edge v1 will be used as the
+  optimal position. If the solution is unique, then the optimal position will
+  be the solution, in which is stored in the edge. Then edge will be pushed onto
+  the heap, in which will give the least error based on the cost in the priority
+  queue</p>
 
 	<div class="col-xs-12">
 		
 		<div class="col-xs-3">
-			<img alt="69451 Faces" width="170" height="auto" src="./project2/images/part4/69451Faces.png">
+			<img alt="69451 Faces" width="170" height="auto"
+        src="./project2/images/part4/69451Faces.png">
 			<h4>Bunny 69451 Faces</h4>
 		</div>
 		<div class="col-xs-3">
-			<img alt="20278 Faces" width="170" height="auto" src="./project2/images/part4/20278Faces.png">
+			<img alt="20278 Faces" width="170" height="auto"
+        src="./project2/images/part4/20278Faces.png">
 			<h4>Bunny 20278 Faces</h4>
 		</div>
 		<div class="col-xs-3">
-			<img alt="2016 Faces" width="170" height="auto" src="./project2/images/part4/2016Faces.png">
+			<img alt="2016 Faces" width="170" height="auto"
+        src="./project2/images/part4/2016Faces.png">
 			<h4>Bunny 2016 Faces</h4>
 		</div>
 		<div class="col-xs-3">
-			<img alt="102 Faces" width="170" height="auto" src="./project2/images/part4/102Faces.PNG">
+			<img alt="102 Faces" width="170" height="auto"
+        src="./project2/images/part4/102Faces.PNG">
 			<h4>Bunny 102 Faces</h4>
 		</div>
 		
 	</div>
 	<div class="col-xs-12">
 		<div class="col-xs-3">
-			<img alt="Cow Original" width="170" height="auto" src="./project2/images/part4/Cow.png">
+			<img alt="Cow Original" width="170" height="auto"
+        src="./project2/images/part4/Cow.png">
 			<h4>Cow Original</h4>
 		</div>
 		<div class="col-xs-3">
-			<img alt="5804 Faces" width="170" height="auto" src="./project2/images/part4/5804Faces.png">
+			<img alt="5804 Faces" width="170" height="auto"
+        src="./project2/images/part4/5804Faces.png">
 			<h4>Cow 5804 Faces</h4>
 		</div>
 		<div class="col-xs-3">
-			<img alt="1075 Faces" width="170" height="auto" src="./project2/images/part4/1075Faces.png">
+			<img alt="1075 Faces" width="170" height="auto"
+        src="./project2/images/part4/1075Faces.png">
 			<h4>Cow 1075 Faces</h4>
 		</div>
 		<div class="col-xs-3">
-			<img alt="105 Faces" width="170" height="auto" src="./project2/images/part4/105Faces.png">
+			<img alt="105 Faces" width="170" height="auto"
+        src="./project2/images/part4/105Faces.png">
 			<h4>Cow 105 Faces</h4>
 		</div>
 	</div>
